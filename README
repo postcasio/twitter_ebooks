@@ -1,4 +1,4 @@
-thom_ebooks is a COBE markov-chain tweetbot. It takes a training file consisting of a user's previous tweets (supply this yourself) and tweets each time twert.py is run.
+thom_ebooks is a COBE markov-chain tweetbot. It takes a training file of flat text and generates tweets each time twert.py is run.
 
 DEPENDENCIES:
 
@@ -17,10 +17,19 @@ cobe init
 
 in the directory where you have placed twert.py. This will create an empty brain.
 
-Run cobe learn thom to read the contents of the training file into cobe. This distribution of thom_ebooks comes with a limited set of 1000 CelestialBeard tweets.
+Run
+
+ cobe learn thom
+
+to read the contents of the supplied training file into cobe. This distribution of thom_ebooks comes with a limited set of CelestialBeard tweets. You can put whatever you like in a text file (maybe actual ebooks?), and pass it to the brain with the learn command.
 
 Create a twitter account and use it to register an application on dev.twitter.com. Set access to read/write and generate an access token. Enter the necessary information into twert.py
 
 Run twert.py to test your thom_ebooks. If the result is to your liking, you can schedule updates with cron.
 
 For regular COBE use,including console and irc use, read the COBE README.
+
+TODO
+
+Allow bot to "respond" to tweets by feeding the reply text into a b.reply.
+"Tweet" button on a page somewhere
