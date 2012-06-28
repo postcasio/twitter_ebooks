@@ -5,13 +5,9 @@ twitter_ebooks is a COBE markov-chain tweetbot. It takes a training file of flat
 Based on thom_ebooks by CelestialBeard, available at https://github.com/CelestialBeard/thom_ebooks/
 
 ## DEPENDENCIES
-
-* [python-distribute](http://pypi.python.org/pypi/distribute)
+* Python 2.7
 * [COBE](https://github.com/pteichman/cobe)
 * [python-twitter](http://code.google.com/p/python-twitter/)
-* [python-simplejson](http://cheeseshop.python.org/pypi/simplejson)
-* [python-httplib2](http://code.google.com/p/httplib2/)
-* [python-oauth2](http://github.com/simplegeo/python-oauth2)
 
 ## SETUP
 
