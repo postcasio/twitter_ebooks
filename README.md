@@ -1,48 +1,45 @@
+# twitter_ebooks
+
 twitter_ebooks is a COBE markov-chain tweetbot. It takes a training file of flat text and generates tweets each time twert.py is run.
 
 Based on thom_ebooks by CelestialBeard, available at https://github.com/CelestialBeard/thom_ebooks/
 
-DEPENDENCIES:
+## DEPENDENCIES
 
-*python-distribute http://pypi.python.org/pypi/distribute
-*COBE https://github.com/pteichman/cobe
-*python-twitter http://code.google.com/p/python-twitter/
-*python-simplejson http://cheeseshop.python.org/pypi/simplejson
-*python-httplib2 http://code.google.com/p/httplib2/
-*python-oauth2 http://github.com/simplegeo/python-oauth2
+* [python-distribute](http://pypi.python.org/pypi/distribute)
+* [COBE](https://github.com/pteichman/cobe)
+* [python-twitter](http://code.google.com/p/python-twitter/)
+* [python-simplejson](http://cheeseshop.python.org/pypi/simplejson)
+* [python-httplib2](http://code.google.com/p/httplib2/)
+* [python-oauth2](http://github.com/simplegeo/python-oauth2)
 
-SETUP
+## SETUP
 
-run 
+Create a new cobe brain:
 
- cobe init
+<pre>cobe init</pre>
 
-in the directory where you have placed twert.py. This will create an empty brain.
+Prime it with your data:
 
-Run
-
- cobe learn thom
-
-to read the contents of the supplied training file into cobe.
+<pre>cobe learn [file]</pre>
 
 Create a twitter account and use it to register an application on dev.twitter.com. Set access to read/write and generate an access token. Enter the necessary information into config-example.py and rename it to config.py
 
-Run twert.py --stdout to test. If the result is to your liking, you can schedule updates with cron.
+Run `twert.py --stdout` to test. If the result is to your liking, you can schedule updates with cron.
 
 For regular COBE use, including console and irc use, read the COBE README.
 
-TODO
+## TODO
 
 Allow bot to "respond" to tweets by feeding the reply text into a b.reply.
-"Tweet" button on a page somewhere
 
-MAINTAINER
+## MAINTAINER
 
 Dominic Adelaar <dom@casiotone.org> (twitter: @casiotone)
 
-LARGE ASCII ART IMAGE OF THOM
+## LARGE ASCII ART IMAGE OF THOM
 
-
+<pre>
                                                                                 
                          MN8DDNMND87                                            
                            ZMN88888888DDNDZ                                     
@@ -92,3 +89,4 @@ LARGE ASCII ART IMAGE OF THOM
                                MNNM=7=~:::::::::~======ONNNNNN                  
                               ZNNM~===::::::::::=======DNNNNNNNM                
                             OMNNND~===::::::::::=======MNNNNNNNNNM?             
+</pre>
