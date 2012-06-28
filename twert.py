@@ -1,10 +1,15 @@
-import twitter
-#get keys/secrets from dev.twitter.com signed in as the bot account
-api = twitter.Api(consumer_key='', consumer_secret='', access_token_key='', access_token_secret='')
+import twitter, argparse, sys, os
+import config
+
+parser = argparse.ArgumentParser(description="Post ebooks tweets to twitter.")
+parser.add_argument('-o', '--stdout', action='store_true', help="Output to stdout instead of posting to twitter.")
+args = parser.parse_args()
+
+api = twitter.Api(**config.api)
 
 from cobe.brain import Brain
 
-b = Brain("cobe.brain")
+b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
 #truncate to 140 characters, do not cut off words
 def smart_truncate(content, length=140):
@@ -13,5 +18,10 @@ def smart_truncate(content, length=140):
     else:
         return content[:length].rsplit(' ', 1)[0]
 
-#feed cobe an empty reply so it babbles
-status = api.PostUpdate((smart_truncate(b.reply(""))))
+# get a reply from brain, encode as UTF-8
+tweet = smart_truncate(b.reply("").encode('utf-8', 'replace'))
+
+if args.stdout:
+	print tweet
+else:
+	status = api.PostUpdate(tweet)
