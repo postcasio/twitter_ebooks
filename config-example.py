@@ -8,3 +8,6 @@ api = {
 
 # List of accounts that learn.py should grab tweets from
 dump_accounts = []
+
+# Skip mentions when learning?
+skip_mentions = True
