@@ -21,7 +21,16 @@ for account in config.dump_accounts:
 	else:
 		last_tweet = 0
 	latest_tweet = last_tweet
-	timeline = api.GetUserTimeline(account, count=200, since_id=latest_tweet, include_rts=not config.skip_retweets, include_replies=not config.skip_replies)
+	timeline = api.GetUserTimeline(
+		account, count=200, since_id=latest_tweet,
+
+		include_rts=not config.skip_retweets,
+		exclude_replies=config.skip_replies,
+
+		trim_user=True,
+		include_entities=False
+	)
+
 	for tweet in timeline:
 		if tweet.id > last_tweet:
 			b.learn(tweet.text)
