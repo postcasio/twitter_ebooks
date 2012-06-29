@@ -21,7 +21,7 @@ for account in config.dump_accounts:
 	else:
 		last_tweet = 0
 	latest_tweet = last_tweet
-	timeline = api.GetUserTimeline(account, count=200, since_id=latest_tweet)
+	timeline = api.GetUserTimeline(account, count=200, since_id=latest_tweet, include_rts=not config.skip_retweets)
 	for tweet in timeline:
 		if tweet.id > last_tweet:
 			if config.skip_mentions and tweet.text[0] == '@':
@@ -31,6 +31,7 @@ for account in config.dump_accounts:
 			if tweet.id > latest_tweet:
 				latest_tweet = tweet.id
 			tweets += 1
+	print "%d found..." % tweets
 	state['accounts'][account] = latest_tweet
 
 print "Learning %d tweets" % tweets

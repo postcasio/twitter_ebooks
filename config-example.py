@@ -11,3 +11,6 @@ dump_accounts = []
 
 # Skip mentions when learning?
 skip_mentions = True
+
+# Skip retweets when learning?
+skip_retweets = True
