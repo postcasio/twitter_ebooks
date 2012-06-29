@@ -20,7 +20,7 @@ for account in config.dump_accounts:
 		last_tweet = state['accounts'][account]
 	else:
 		last_tweet = 0
-	latest_tweet = 0
+	latest_tweet = last_tweet
 	timeline = api.GetUserTimeline(account, count=200, since_id=latest_tweet)
 	for tweet in timeline:
 		if tweet.id > last_tweet:
@@ -31,7 +31,6 @@ for account in config.dump_accounts:
 			if tweet.id > latest_tweet:
 				latest_tweet = tweet.id
 			tweets += 1
-
 	state['accounts'][account] = latest_tweet
 
 print "Learning %d tweets" % tweets
