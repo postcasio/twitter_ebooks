@@ -21,12 +21,9 @@ for account in config.dump_accounts:
 	else:
 		last_tweet = 0
 	latest_tweet = last_tweet
-	timeline = api.GetUserTimeline(account, count=200, since_id=latest_tweet, include_rts=not config.skip_retweets)
+	timeline = api.GetUserTimeline(account, count=200, since_id=latest_tweet, include_rts=not config.skip_retweets, include_replies=not config.skip_replies)
 	for tweet in timeline:
 		if tweet.id > last_tweet:
-			if config.skip_mentions and tweet.text[0] == '@':
-				continue
-
 			b.learn(tweet.text)
 			if tweet.id > latest_tweet:
 				latest_tweet = tweet.id
