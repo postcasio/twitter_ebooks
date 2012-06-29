@@ -7,7 +7,7 @@ Based on thom_ebooks by CelestialBeard, available at https://github.com/Celestia
 ## DEPENDENCIES
 * Python 2.7
 * [COBE](https://github.com/pteichman/cobe)
-* [python-twitter](http://code.google.com/p/python-twitter/)
+* postcasio/[python-twitter](https://github.com/postcasio/python-twitter) - modified version of python-twitter with support for new API options.
 
 ## SETUP
 
