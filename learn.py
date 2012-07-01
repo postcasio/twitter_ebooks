@@ -31,9 +31,10 @@ for account in config.dump_accounts:
 	print "Grabbing tweets for %s" % account
 	
 	if account in state['accounts']:
-		last_tweet = state['accounts'][account]
+		last_tweet = long(state['accounts'][account])
 	else:
 		last_tweet = 0
+
 	try:
 		timeline = api.GetUserTimeline(
 			account, count=200, since_id=last_tweet,
@@ -48,13 +49,12 @@ for account in config.dump_accounts:
 		continue
 
 	for tweet in timeline:
-		if tweet.id > state['accounts'][account]:
-			b.learn(tweet.text)
-			last_tweet = max(tweet.id, last_tweet)
-			tweets += 1
+		b.learn(tweet.text)
+		last_tweet = max(tweet.id, last_tweet)
+		tweets += 1
 
 	print "%d found..." % tweets
-	state['accounts'][account] = last_tweet
+	state['accounts'][account] = str(last_tweet)
 
 print "Learning %d tweets" % tweets
 b.stop_batch_learning()
@@ -62,17 +62,18 @@ b.stop_batch_learning()
 if config.replies:
 	print "Performing replies"
 	
-	replies = api.GetReplies(since_id=state['last_reply'])
-	last_tweet = state['last_reply']
-	for reply in replies:
-		if reply.id > state['last_reply']:
-			try:
-				api.PostUpdate(smart_truncate('@%s %s' % (reply.user.screen_name, b.reply(reply.text).encode('utf-8', 'replace'))), in_reply_to_status_id=reply.id)
-			except:
-				print 'Error posting reply, couldnt post it.'
-			last_tweet = max(reply.id, last_tweet)
+	last_tweet = long(state['last_reply'])
 
-	state['last_reply'] = last_tweet
+	replies = api.GetReplies(since_id=last_tweet)
+
+	for reply in replies:
+		try:
+			api.PostUpdate(smart_truncate('@%s %s' % (reply.user.screen_name, b.reply(reply.text).encode('utf-8', 'replace'))), in_reply_to_status_id=reply.id)
+		except:
+			print 'Error posting reply.'
+		last_tweet = max(reply.id, last_tweet)
+
+	state['last_reply'] = str(last_tweet)
 
 print "Saving state"
 
