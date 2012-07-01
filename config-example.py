@@ -14,3 +14,6 @@ skip_replies = True
 
 # Skip retweets when learning?
 skip_retweets = True
+
+# Reply to tweets?
+replies = True

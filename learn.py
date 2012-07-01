@@ -8,40 +8,72 @@ b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 try:
 	state = loads(open(os.path.join(os.path.dirname(__file__), '.state'), 'r').read())
 except:
-	state = {'accounts': {}}
+	state = {}
+
+if 'accounts' not in state:
+	state['accounts'] = {}
+if 'last_reply' not in state:
+	state['last_reply'] = 0
 
 api = twitter.Api(**config.api)
 
 b.start_batch_learning()
+
 tweets = 0
+
+def smart_truncate(content, length=140):
+	    if len(content) <= length:
+	        return content
+	    else:
+	        return content[:length].rsplit(' ', 1)[0]
+
 for account in config.dump_accounts:
 	print "Grabbing tweets for %s" % account
+	
 	if account in state['accounts']:
 		last_tweet = state['accounts'][account]
 	else:
 		last_tweet = 0
-	latest_tweet = last_tweet
-	timeline = api.GetUserTimeline(
-		account, count=200, since_id=latest_tweet,
-
-		include_rts=not config.skip_retweets,
-		exclude_replies=config.skip_replies,
-
-		trim_user=True,
-		include_entities=False
-	)
+	try:
+		timeline = api.GetUserTimeline(
+			account, count=200, since_id=last_tweet,
+	
+			include_rts=not config.skip_retweets,
+			exclude_replies=config.skip_replies,
+	
+			trim_user=True,
+			include_entities=False
+		)
+	except:
+		continue
 
 	for tweet in timeline:
-		if tweet.id > last_tweet:
+		if tweet.id > state['accounts'][account]:
 			b.learn(tweet.text)
-			if tweet.id > latest_tweet:
-				latest_tweet = tweet.id
+			last_tweet = max(tweet.id, last_tweet)
 			tweets += 1
+
 	print "%d found..." % tweets
-	state['accounts'][account] = latest_tweet
+	state['accounts'][account] = last_tweet
 
 print "Learning %d tweets" % tweets
 b.stop_batch_learning()
-print "Saving data"
+
+if config.replies:
+	print "Performing replies"
+	
+	replies = api.GetReplies(since_id=state['last_reply'])
+	last_tweet = state['last_reply']
+	for reply in replies:
+		if reply.id > state['last_reply']:
+			try:
+				api.PostUpdate(smart_truncate('@%s %s' % (reply.user.screen_name, b.reply(reply.text).encode('utf-8', 'replace'))), in_reply_to_status_id=reply.id)
+			except:
+				print 'Error posting reply, couldnt post it.'
+			last_tweet = max(reply.id, last_tweet)
+
+	state['last_reply'] = last_tweet
+
+print "Saving state"
 
 open(os.path.join(os.path.dirname(__file__), '.state'), 'w').write(dumps(state))

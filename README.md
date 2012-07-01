@@ -25,10 +25,6 @@ Run `twert.py --stdout` to test. If the result is to your liking, you can schedu
 
 For regular COBE use, including console and irc use, read the COBE README.
 
-## TODO
-
-Allow bot to "respond" to tweets by feeding the reply text into a b.reply.
-
 ## MAINTAINER
 
 Dominic Adelaar <dom@casiotone.org> (twitter: @casiotone)
