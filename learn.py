@@ -11,7 +11,7 @@ except:
 	state = {}
 
 if 'accounts' not in state:
-â	state['accounts'] = {}
+	state['accounts'] = {}
 
 
 api = twitter.Api(**config.api)
