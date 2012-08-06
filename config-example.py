@@ -17,3 +17,6 @@ skip_retweets = True
 
 # Reply to tweets?
 replies = True
+
+# Bot screen name
+screen_name = ''
