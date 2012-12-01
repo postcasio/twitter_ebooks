@@ -4,6 +4,10 @@ twitter_ebooks is a COBE markov-chain tweetbot. It takes a training file of flat
 
 Based on thom_ebooks by CelestialBeard, available at https://github.com/CelestialBeard/thom_ebooks/
 
+This is no longer actively maintained. Check out clonepa's much better fork:
+
+https://github.com/clonepa/twitter_ebooks
+
 ## DEPENDENCIES
 * Python 2.7
 * [COBE](https://github.com/pteichman/cobe)
